@@ -1,4 +1,4 @@
-# NixvimChad - the NvChad config for NixvimChad
+# NixvimChad - the NvChad config for NixVim
 
 NixvimChad is a Neovim distribution built using [NixVim](https://github.com/nix-community/nixvim), designed to mimic [NvChad](https://nvchad.com) as closely as possible.
 
