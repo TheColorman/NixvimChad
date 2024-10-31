@@ -1,4 +1,4 @@
-pkgs: let
+{pkgs, chadConfig, helpers, ...}: let
   inherit
     (pkgs.vimPlugins)
     plenary-nvim
@@ -22,6 +22,7 @@ pkgs: let
     telescope-nvim
     nvim-treesitter
     ;
+  inherit (helpers) toLuaObject;
   nvchad-base46 = import ./plugins/nvchad-base46.nix pkgs;
   nvchad-volt = import ./plugins/nvchad-volt.nix pkgs;
   nvchad-menu = import ./plugins/nvchad-menu.nix pkgs;
@@ -168,12 +169,31 @@ in [
   #     '';
   #   };
   # }
+  # <<< Mason config <<<
   {
     pkg = nvim-lspconfig;
     event = "User FilePost";
     config = ''
       function()
-        require("nvchad.configs.lspconfig").defaults()
+        local nvlsp = require "nvchad.configs.lspconfig"
+        local lspconfig = require "lspconfig"
+
+        nvlsp.defaults() -- loads nvchad's defaults
+
+        local servers = ${toLuaObject (chadConfig.lspconfig.servers or [])}
+
+        file = io.open("/home/color/lsp.log", "a")
+
+        for _, lsp in ipairs(servers) do
+          file:write("loading" .. lsp)
+          lspconfig[lsp].setup {
+            on_attach = nvlsp.on_attach,
+            on_init = nvlsp.on_init,
+            capabilities = nvlsp.capabilities,
+          }
+        end
+
+        file:close();
       end
     '';
   }

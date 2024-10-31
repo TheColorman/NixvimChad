@@ -1,7 +1,6 @@
-{pkgs, ...}: let
+{pkgs, ...}@args: let
   inherit (pkgs.vimPlugins) nvchad;
-  nvchad-init = import ./nvchad-init.nix pkgs;
-  nvchad-plugins = import ./nvchad-plugins.nix pkgs;
+  nvchad-init = import ./nvchad-init.nix args;
 
   nvchad-starter = import ./plugins/nvchad-starter.nix pkgs;
 in {
@@ -27,8 +26,7 @@ in {
             lazy = false;
           }
         ]
-        ++ nvchad-init
-        ++ nvchad-plugins;
+        ++ nvchad-init;
       config.__raw = "lazy_config";
     };
   };
