@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}: let
+{pkgs, ...}: let
   inherit (pkgs.vimPlugins) nvchad;
   nvchad-init = import ./nvchad-init.nix pkgs;
   nvchad-plugins = import ./nvchad-plugins.nix pkgs;
