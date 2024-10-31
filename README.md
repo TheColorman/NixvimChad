@@ -2,6 +2,8 @@
 
 NixvimChad is a Neovim distribution built using [NixVim](https://github.com/nix-community/nixvim), designed to mimic [NvChad](https://nvchad.com) as closely as possible.
 
+![nvimchad.png](./assets/nixvimchad.png)
+
 > [!WARNING]
 > NixvimChad depends on features not currently present in upstream NixVim. The flake inputs for NixvimChad are therefore pointed to [my own fork of NixVim](https://github.com/thecolorman/nixvim). The input will be changed once upstream has the required features (see the fork diff for the features NixvimChad requires).
 
