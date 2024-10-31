@@ -43,7 +43,8 @@ Nix flake template:
   };
 
   outputs = {nixvimchad}:
-    nixvimchad.withExtension (import ./config) 
+    nixvimchad.withExtension (import ./config);
+};
 ```
 
 The `withExtension` function will generate `package` attributes. You can then write your NixVim config like normal:  
