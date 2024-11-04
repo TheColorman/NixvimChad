@@ -1,5 +1,5 @@
 {
-  description = "A nixvim configuration";
+  description = "An NvChad inspired NixVim configuration module";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -8,7 +8,7 @@
   };
 
   outputs = inputs: let
-    configure = import ./configure.nix inputs;
+    configure = import ./init.nix inputs;
     base = configure (_: {});
   in {
     inherit configure;
