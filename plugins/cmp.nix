@@ -1,4 +1,4 @@
-{config, chadLib, pkgs, ...}: let
+{config, chadLib, pkgs, lib, ...}: let
   inherit (pkgs.vimPlugins)
     nvim-cmp
     luasnip
@@ -9,6 +9,9 @@
     cmp-nvim-lsp
     cmp-buffer
     cmp-path; 
+  inherit (lib.strings) optionalString;
+
+  nvchad = config.chad.plugins.nvchad;
 in chadLib.mkPlugin {
   inherit config;
   name = "cmp";
@@ -28,7 +31,7 @@ in chadLib.mkPlugin {
         config = ''
           function(_, opts)
             require("luasnip").config.set_config(opts)
-            require "nvchad.configs.luasnip"
+            ${optionalString nvchad.enable "require \"nvchad.configs.luasnip\""}
           end
         '';
       }
@@ -58,7 +61,7 @@ in chadLib.mkPlugin {
       cmp-buffer
       cmp-path
     ];
-    opts.__raw = ''
+    opts.__raw = lib.mkIf nvchad.enable ''
       function()
         return require "nvchad.configs.cmp"
       end

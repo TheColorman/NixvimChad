@@ -12,6 +12,7 @@
       # Delete init.lua, lua/plugins/, lua/chadrc.lua, lua/mappings.lua, and
       # lua/options.lua as they could cause issues and conflict with our own
       # versions of those files.
+      # TODO: Do selective install instead of selective remove
 
       rm init.lua
       rm -r lua/plugins
