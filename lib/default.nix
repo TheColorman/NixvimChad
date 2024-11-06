@@ -25,6 +25,7 @@ in {
           https://nix-community.github.io/nixvim/plugins/lazy/plugins.html
           for an options list.
         '';
+        default = attrs.pluginConfig or {};
       };
 
       pkg = mkOption {
@@ -36,16 +37,8 @@ in {
 
     config = let
       cfg = config.chad.plugins.${name};
-      pluginConfig = {
-        pkg = cfg.pkg;
-      } // (attrs.pluginConfig or {});
-      globalConfig = (
-        if
-          builtins.hasAttr "globalConfig" attrs
-        then
-          attrs.globalConfig {inherit pkg;}
-        else {}
-      );
+      pluginConfig = { pkg = cfg.pkg; } // (cfg.pluginConfig or {});
+      globalConfig = (attrs.globalConfig or (_: {})) { inherit pkg; };
     in ({
       plugins.lazy.plugins = lib.lists.optional cfg.enable pluginConfig;
       # Can't disable globalConfig based on cfg.enable, so rely on each plugin to do it manually. There's gotta be a better way to do this.
