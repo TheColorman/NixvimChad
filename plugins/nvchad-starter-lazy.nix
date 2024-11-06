@@ -39,12 +39,21 @@ in chadLib.mkPlugin {
   pluginConfig.lazy = false;
 
   globalConfig = {pkg, ...}: let
-    settings = config.chad.plugins.nvchad-starter-lazy.settings;
+    cfg = config.chad.plugins.nvchad-starter-lazy;
+    settings = cfg.settings;
+    enable = cfg.enable;
+  # Get inifinite recursion for some reason if I try to make the entire
+  # attrset optional based on `cfg.enable`, so I have to do each 
+  # individual attr??
   in {
-    extraFiles."lua/configs/lazy.lua".source = "${pkg}/lua/configs/lazy.lua";
-    extraConfigLuaPre = ''
+    extraFiles = lib.attrsets.optionalAttrs enable {
+      "lua/configs/lazy.lua".source = "${pkg}/lua/configs/lazy.lua";
+    };
+    extraConfigLuaPre = lib.strings.optionalString enable ''
       local lazy_config = ${settings}
     '';
-    plugins.lazy.config.__raw = "lazy_config";
+    plugins = lib.attrsets.optionalAttrs enable {
+      lazy.config.__raw = "lazy_config";
+    };
   };
 }
