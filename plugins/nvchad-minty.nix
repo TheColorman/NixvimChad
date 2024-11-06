@@ -4,10 +4,10 @@
   pkg = pkgs.vimUtils.buildVimPlugin {
     name = "nvchad-minty";
     src = pkgs.fetchFromGitHub {
-      owner = "nvchad";
+      owner = "siduck";
       repo = "minty";
-      rev = "main";
-      hash = "sha256-cthvn3CKYlA54unvz/ayS6W1/dnfhBgKOs39rzQTr2E=";
+      rev = "1ab2b8334cec1770fef096f0a5697bf0c3afb3ca";
+      hash = "sha256-91CptDILzuHFDORU6PuZuT+H09JXpQuj12eaYt1kFqI=";
     };
   };
 

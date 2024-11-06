@@ -4,10 +4,10 @@
   pkg = pkgs.vimUtils.buildVimPlugin {
     name = "nvchad-volt";
     src = pkgs.fetchFromGitHub {
-      owner = "nvchad";
+      owner = "siduck";
       repo = "volt";
-      rev = "main";
-      hash = "sha256-i5gbXzJK7LpfUZbP/RG0wD0SWUj1EwUJq8Z+IEN3Ihg=";
+      rev = "ff954757fdaf72da0dedd77bdf74718ea846f989";
+      hash = "sha256-ZSlOeZ75s+IRje9U6P8riYNn8HMDImmLh7On11JXKM8=";
     };
   };
 }
