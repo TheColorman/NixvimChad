@@ -9,9 +9,7 @@
 
   outputs = inputs: let
     configure = import ./init.nix inputs;
-    base = configure (_: {
-      chad.plugins.nvchad-ui.enable = false;
-    });
+    base = configure (_: {});
   in {
     inherit configure;
   } // base;
