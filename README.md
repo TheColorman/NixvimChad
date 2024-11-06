@@ -14,14 +14,14 @@ You can try out NixvimChad with the following command:
 ```bash
 nix run github:thecolorman/nixvimchad
 # or edit a file
-nix run github:thecolorman/nixvimchat -- file.nix
+nix run github:thecolorman/nixvimchad -- file.nix
 ```
 
 ## Why?
 
 NvChad is a great set of default plugins for Neovim that turns the editor into an IDE. At the same time, NvChad (and Vim in a broader sense) relies on mutable configuration in your home directory, which goes against the immutable and declarative philosophy of Nix. NixVim was created to address this, being a Neovim distribution entirely designed around configuring Neovim using the Nix language.
 
-NvChad is a very popular starting point for Neovim configurations, but getting it to work in is a pain due to the differing configuration philosophies. That's where NixvimChad comes in!
+NvChad is a very popular starting point for Neovim configurations, but getting it to work in NixVim is a pain due to the differing configuration philosophies. That's where NixvimChad comes in!
 
 ## How?
 
@@ -29,10 +29,10 @@ NixvimChad emulates every step of a normal NvChad configuration by manually conv
 
 ## Extending
 
-You can use NixvimChad as the base for your own NixVim config by using the exposed `withExtension` helper.
+You can use NixvimChad as the base for your own NixVim config by using the exposed `configure` helper. NixvimChad adds new options to the NixVim configuratoin under the `chad` option.
 
 > [!NOTE]
-> `withExtension` is just a wrapper over NixVim's [`<nixvim>.extend`](https://nix-community.github.io/nixvim/platforms/standalone.html?highlight=extend#extending-an-existing-configuration) function. `withExtension` creates a package for each supported system, where `<nixvim>.extend` only extends a single package.
+> `configure` is just a wrapper over NixVim's [`<nixvim>.extend`](https://nix-community.github.io/nixvim/platforms/standalone.html?highlight=extend#extending-an-existing-configuration) function. `configure` creates a package for each supported system, where `<nixvim>.extend` only extends a single package.
 
 Nix flake template:
 
@@ -42,12 +42,12 @@ Nix flake template:
     nixvimchad.url = "github:thecolorman/nixvimchad";
   };
 
-  outputs = {nixvimchad}:
-    nixvimchad.withExtension (import ./config);
+  outputs = {nixvimchad, ...}:
+    nixvimchad.configure (import ./config);
 };
 ```
 
-The `withExtension` function will generate `package` attributes. You can then write your NixVim config like normal:  
+The `configure` function will generate the proper `package` attributes for your flake. You can then write your NixVim config like normal:  
 
 ```nix
 # config/default.nix
@@ -58,4 +58,53 @@ The `withExtension` function will generate `package` attributes. You can then wr
 }
 ```
 
-You can then run your configuration with `nix run` or add it as an input in your NixOS system flake to add the executable to your NixOS configuration.
+In addition, NixvimChad exposes new options under `chad` that allow you to disable or override the configuration to any of the plugins used in NvChad:
+
+```nix
+# config/default.nix
+{ pkgs, ... }: {
+  chad.plugins.lspconfig.pluginConfig = {
+    # You can put anything in here that is defined at https://nix-community.github.io/nixvim/plugins/lazy/plugins.html
+    config = ''
+      function()
+        require("nvchad.configs.lspconfig").defaults()
+
+        local lspconfig = require "lspconfig"
+
+        local servers = { "nixd" }
+        local nvlsp = require "nvchad.configs.lspconfig"
+
+        for _, lsp in ipairs(servers) do
+          lspconfig[lsp].setup {
+            on_attach = nvlsp.on_attach,
+            on_init = nvlsp.on_init,
+            capabilities = nvlsp.capabilities,
+          }
+        end
+      end
+    '';
+  };
+}
+```
+
+You can then run your configuration with `nix run` or add it as an input in your NixOS system flake to add the executable to your NixOS configuration:
+
+```nix
+# system flake
+{
+  inputs.nixvimcfg.url = "github:<your_name>/<your_repository>";
+  
+  outputs = {nixvimcfg, ...}: {
+    nixosConfigurations = {
+      hostname = inputs.nixpkgs.lib.nixosSystem {
+        modules = [
+          ./configuration.nix
+          {
+            environment.systemPackages = [ nixvimcfg.packages.x86_64-linux.default ];
+          }
+        ];
+      };
+    };
+  };
+}
+```
