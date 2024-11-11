@@ -66,6 +66,8 @@ In addition, NixvimChad exposes new options under `chad` that allow you to disab
 ```nix
 # config/default.nix
 { pkgs, ... }: {
+  # For example, to enable the nixd language server
+  # taken from https://github.com/NvChad/starter/blob/main/lua/plugins/init.lua:
   chad.plugins.lspconfig.pluginConfig = {
     # You can put anything in here that is defined at https://nix-community.github.io/nixvim/plugins/lazy/plugins.html
     config = ''
@@ -96,6 +98,7 @@ You can then run your configuration with `nix run` or add it as an input in your
 # system flake
 {
   inputs.nixvimcfg.url = "github:<your_name>/<your_repository>";
+  # ... other inputs
   
   outputs = {nixvimcfg, ...}: {
     nixosConfigurations = {
