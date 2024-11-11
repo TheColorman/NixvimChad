@@ -92,6 +92,12 @@ In addition, NixvimChad exposes new options under `chad` that allow you to disab
 }
 ```
 
+The list of NvChad options is currently not documented, but you can see the available plugins under `chad.plugins` in [`plugins/`](./plugins). Every plugin has the following options, defined in [`lib/default.nix`](./lib/default.nix):
+
+* `enable` - Whether to enable the plugin. On by default. If other plugins have the disabled plugin as a dependency, they will try to disable functionality that depends on it.  
+* `pluginConfig` - An attribute set that is passed to NixVim's `plugins.lazy.plugins.*` configuration. See the [NixVim documentation for Lazy plugins](https://nix-community.github.io/nixvim/plugins/lazy/plugins.html) for a list of options.  
+* `pkg` - The package used by the plugin. Most of these are from nixpkgs, but some of the NvChad builtin plugins are fetched directly from GitHub.
+
 You can then run your configuration with `nix run` or add it as an input in your NixOS system flake to add the executable to your NixOS configuration:
 
 ```nix
