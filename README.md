@@ -5,7 +5,10 @@ NixvimChad is a Neovim distribution built using [NixVim](https://github.com/nix-
 ![nvimchad.png](./assets/nixvimchad.png)
 
 > [!WARNING]
-> NixvimChad depends on features not currently present in upstream NixVim. The flake inputs for NixvimChad are therefore pointed to [my own fork of NixVim](https://github.com/thecolorman/nixvim). The input will be changed once upstream has the required features (see the fork diff for the features NixvimChad requires).
+> NixvimChad depends on features not currently present in upstream NixVim. The flake inputs for NixvimChad are therefore pointed to [my own fork of NixVim](https://github.com/thecolorman/nixvim). The input will be changed once upstream has the required features (see [the fork diff](https://github.com/nix-community/nixvim/compare/main...TheColorman:nixvim:main) for the features NixvimChad requires).
+
+> [!IMPORTANT]
+> NixvimChad is developed for my own personal use, so I can't guarantee quality or that everything will work properly. For example, some NvChad plugins rely on hardcoded paths to `~/.local/share/nvim/lazy/`, as they would ordinarily be installed there, instead of the Nix store. Whenever I run intro a problem I try to fix it, and if you open an issue I'll probably take a look at that too, but you should expect there to be bugs.
 
 ## Try
 
