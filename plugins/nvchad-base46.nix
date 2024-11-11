@@ -1,4 +1,10 @@
-{config,  chadLib, pkgs, ...}: chadLib.mkPlugin {
+{
+  config,
+  chadLib,
+  pkgs,
+  ...
+}:
+chadLib.mkPlugin {
   inherit config;
   name = "nvchad-base46";
   pkg = pkgs.vimUtils.buildVimPlugin {
@@ -17,4 +23,3 @@
     end
   '';
 }
-
