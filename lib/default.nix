@@ -37,7 +37,7 @@ in {
 
     config = let
       cfg = config.chad.plugins.${name};
-      pluginConfig = { pkg = cfg.pkg; } // (cfg.pluginConfig or {});
+      pluginConfig = { pkg = cfg.pkg; } // (attrs.pluginConfig or {}) // (cfg.pluginConfig or {});
       globalConfig = (attrs.globalConfig or (_: {})) { inherit pkg; };
     in ({
       plugins.lazy.plugins = lib.lists.optional cfg.enable pluginConfig;
