@@ -17,9 +17,9 @@
     ./plugins/nvchad-ui.nix
     ./plugins/nvchad-volt.nix
     ./plugins/nvchad.nix
+    ./plugins/nvimtree.nix
     ./plugins/plenary.nix
     ./plugins/telescope.nix
-    ./plugins/tree.nix
     ./plugins/treesitter.nix
     ./plugins/web-devicons.nix
     ./plugins/which-key.nix

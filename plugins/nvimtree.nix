@@ -2,8 +2,11 @@
   nvchad = config.chad.plugins.nvchad;
 in chadLib.mkPlugin {
   inherit config;
-  name= "tree";
-  pkg = pkgs.vimPlugins.nvim-tree-lua;
+  name= "nvimtree";
+  pkg = pkgs.vimPlugins.nvim-tree-lua.overrideAttrs (finalAttrs: previousAttrs: {
+    # Not sure what happened here
+    nvimSkipModule = [ "nvim-tree._meta.api_decorator" "nvim-tree._meta.api" ];
+  });
 
   pluginConfig = {
     cmd = ["NvimTreeToggle" "NvimTreeFocus"];

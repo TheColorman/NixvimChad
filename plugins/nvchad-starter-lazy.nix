@@ -1,5 +1,6 @@
 # Sets the lazy config from github:nvchad/starter
 {chadLib, pkgs, lib, config, ...}: let
+  nvchad = config.chad.plugins.nvchad;
   nvchad-starter = pkgs.vimUtils.buildVimPlugin {
     name = "nvchad-starter";
     src = pkgs.fetchFromGitHub {
@@ -12,7 +13,6 @@
       # Delete init.lua, lua/plugins/, lua/chadrc.lua, lua/mappings.lua, and
       # lua/options.lua as they could cause issues and conflict with our own
       # versions of those files.
-      # TODO: Do selective install instead of selective remove
 
       rm init.lua
       rm -r lua/plugins
@@ -20,6 +20,10 @@
       rm lua/mappings.lua
       rm lua/options.lua
     '';
+    # For some reason Nix is trying to import the modules we removed, so we need to explicitly tell it not to check them
+    # Also skipping config.lspconfig, as nvchad's lspconfig relies on the global base46_cache that is only set through nixvimchad
+    nvimSkipModule = [ "mappings" "chadrc" "options" "plugins" "init" "configs.lspconfig" ];
+    dependencies = [ nvchad.pkg ];
   };
 in chadLib.mkPlugin {
   inherit config;

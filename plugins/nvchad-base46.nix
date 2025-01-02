@@ -3,8 +3,7 @@
   chadLib,
   pkgs,
   ...
-}:
-chadLib.mkPlugin {
+}: chadLib.mkPlugin {
   inherit config;
   name = "nvchad-base46";
   pkg = pkgs.vimUtils.buildVimPlugin {
@@ -15,6 +14,8 @@ chadLib.mkPlugin {
       rev = "f006ffdd0e4c0a8b1a639713f5208bc282c60058"; # branch v2.5
       hash = "sha256-jQViA0nACj+LJAIdr7SvJmFXeCiqmICPlkXuNGZAtg8=";
     };
+    # Disables checking lua module dependencies - this is because nvchad-ui and nvchad-base46 have a circular dependency in nixvimchad
+    doCheck = false;
   };
 
   pluginConfig.build = ''
