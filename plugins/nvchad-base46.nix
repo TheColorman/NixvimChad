@@ -11,8 +11,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "nvchad";
       repo = "base46";
-      rev = "f006ffdd0e4c0a8b1a639713f5208bc282c60058"; # branch v2.5
-      hash = "sha256-jQViA0nACj+LJAIdr7SvJmFXeCiqmICPlkXuNGZAtg8=";
+      rev = "5009bc479de4f53ec98e9dd1692beb1f39ff3a82"; # branch v2.5
+      hash = "sha256-wEDIayk6sOC3DY1t2Py3VlS11EUXqFUMVBIEVlN9CuY=";
     };
     # Disables checking lua module dependencies - this is because nvchad-ui and nvchad-base46 have a circular dependency in nixvimchad
     doCheck = false;

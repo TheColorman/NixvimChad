@@ -7,10 +7,10 @@ in
     pkg = pkgs.vimUtils.buildVimPlugin {
       name = "nvchad-minty";
       src = pkgs.fetchFromGitHub {
-        owner = "siduck";
+        owner = "nvzone";
         repo = "minty";
-        rev = "1ab2b8334cec1770fef096f0a5697bf0c3afb3ca";
-        hash = "sha256-91CptDILzuHFDORU6PuZuT+H09JXpQuj12eaYt1kFqI=";
+        rev = "6dce9f097667862537823d515a0250ce58faab05";
+        hash = "sha256-U6IxF/i1agIGzcePYg/k388GdemBtA7igBUMwyQ3d3I=";
       };
       dependencies = [ nvchad-volt.pkg ];
     };
